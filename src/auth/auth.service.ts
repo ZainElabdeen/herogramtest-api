@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtDto } from './dto/jwt-payload.dto';
-import { comparePassword } from 'src/utils/bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { comparePassword } from 'src/utils/bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto, UserLoginResponseDto } from './dto/login.dto';
 
@@ -25,7 +25,7 @@ export class AuthService {
     const user = await this.usersService.getUserByEmail(logInInput?.email);
 
     if (!user) {
-      throw Error('email or password incorrect');
+      throw new BadRequestException('email or password incorrect');
     }
 
     const isValidPwd = this.validatePassword(
@@ -34,7 +34,7 @@ export class AuthService {
     );
 
     if (!isValidPwd) {
-      throw Error('email or password incorrect');
+      throw new BadRequestException('email or password incorrect');
     }
 
     const payload: JwtDto = {
