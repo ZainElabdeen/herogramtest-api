@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest # Use the latest MongoDB image
+    container_name: mongodb_container # Name the container
+    ports:
+      - '27017:27017' # Expose MongoDB on the default port 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/data/db # Persist MongoDB data in a named volume
+
+volumes:
+  mongo-data:
