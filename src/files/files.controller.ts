@@ -73,7 +73,7 @@ export class FilesController {
 
   @Post(':fileId/share')
   async generateSharedLink(@Param('fileId') fileId: string) {
-    return this.filesService.generateSharedLink(fileId); // Call the service method
+    return this.filesService.generateSharedLink(fileId);
   }
 
   @Public()
