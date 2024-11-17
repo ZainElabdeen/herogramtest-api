@@ -71,9 +71,9 @@ export class FilesController {
     return this.filesService.getFilesByUser(userId);
   }
 
-  @Get(':fileId/share')
+  @Post(':fileId/share')
   async generateSharedLink(@Param('fileId') fileId: string) {
-    return this.filesService.generateSharedLink(fileId);
+    return this.filesService.generateSharedLink(fileId); // Call the service method
   }
 
   @Public()
