@@ -27,7 +27,10 @@ export class FilesController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: './uploads', // Directory to save the file
+        destination: (req, file, callback) => {
+          const uploadPath = join(__dirname, '..', 'uploads');
+          callback(null, uploadPath);
+        },
         filename: (req, file, callback) => {
           const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
