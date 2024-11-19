@@ -111,6 +111,7 @@ export class FilesController {
       return res.status(404).json({ message: 'File not found' });
     }
 
-    res.sendFile(filePath);
+    const fileUrl = `/uploads/${filename}`;
+    return res.json({ fileUrl });
   }
 }
