@@ -10,8 +10,9 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { extname, join } from 'path';
 import { Response } from 'express';
+import * as fs from 'fs';
 
 import { FilesService } from './files.service';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -100,5 +101,16 @@ export class FilesController {
   async getFileById(@Param('id') id: string) {
     const file = await this.filesService.getFileById(id);
     return { file };
+  }
+
+  @Get('uploads/:filename')
+  async getFile(@Param('filename') filename: string, @Res() res: Response) {
+    const filePath = join(__dirname, '..', 'uploads', filename);
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+
+    res.sendFile(filePath);
   }
 }

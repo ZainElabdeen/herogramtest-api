@@ -8,8 +8,6 @@ import { FilesModule } from './files/files.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RestAuthGuard } from './auth/guards/auth.guard';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 
 @Module({
   imports: [
@@ -22,10 +20,6 @@ import { join } from 'path';
         uri: configService.get<string>('MONGO_URI'),
       }),
       inject: [ConfigService],
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'), // Adjust path if necessary
-      serveRoot: '/uploads', // This is the public URL path to access files
     }),
     FilesModule,
   ],
