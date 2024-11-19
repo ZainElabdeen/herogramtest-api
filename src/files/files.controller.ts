@@ -108,7 +108,7 @@ export class FilesController {
     const filePath = join(__dirname, '..', 'uploads', filename);
 
     if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ message: 'File not found' });
+      throw new NotFoundException('File not found');
     }
 
     res.sendFile(filePath);
