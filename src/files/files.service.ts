@@ -38,11 +38,13 @@ export class FilesService {
   }
 
   async getFileBySharedLink(sharedLink: string) {
-    const file = await this.fileModel.findOne({ sharedLink }).exec();
-    if (file) {
-      file.viewCount += 1;
-      await file.save();
-    }
+    const file = await this.fileModel
+      .findOneAndUpdate(
+        { sharedLink },
+        { $inc: { viewCount: 1 } },
+        { new: true },
+      )
+      .exec();
     return file;
   }
 
